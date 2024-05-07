@@ -20,5 +20,6 @@ jobs:
       - uses: bluefireteam/flutter-gh-pages@v7
         with:
           workingDir: example
+          baseHref: /phoenix_theme/
           webRenderer: canvaskit
           customArgs: --no-tree-shake-icons
