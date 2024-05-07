@@ -52,6 +52,11 @@ ThemePair phoenixTheme({
       navigationRailTheme: _naviRailTheme(darkScheme),
       navigationBarTheme: _naviBarTheme(darkScheme),
       appBarTheme: _appBarTheme(darkScheme),
+      cardTheme: CardTheme(
+        color: darkScheme.surface.scale(
+          lightness: 0.03,
+        ),
+      ),
     )
   );
 }
@@ -211,7 +216,7 @@ Color _getSwitchThumbColor(Set<MaterialState> states, ColorScheme colorScheme) {
 }
 
 Color _getSwitchTrackColor(Set<MaterialState> states, ColorScheme colorScheme) {
-  final uncheckedColor = colorScheme.primary.withOpacity(.25);
+  final uncheckedColor = colorScheme.onSurface.withOpacity(.25);
   final disabledUncheckedColor = colorScheme.onSurface.withOpacity(.15);
   final disabledCheckedColor = colorScheme.onSurface.withOpacity(.18);
 
