@@ -35,6 +35,7 @@ ThemePair phoenixTheme({
       navigationRailTheme: _naviRailTheme(lightScheme),
       navigationBarTheme: _naviBarTheme(lightScheme),
       appBarTheme: _appBarTheme(lightScheme),
+      snackBarTheme: _snackBarThemeData(lightScheme),
     ),
     darkTheme: ThemeData(
       colorScheme: darkScheme,
@@ -52,9 +53,10 @@ ThemePair phoenixTheme({
       navigationRailTheme: _naviRailTheme(darkScheme),
       navigationBarTheme: _naviBarTheme(darkScheme),
       appBarTheme: _appBarTheme(darkScheme),
+      snackBarTheme: _snackBarThemeData(darkScheme),
       cardTheme: CardTheme(
         color: darkScheme.surface.scale(
-          lightness: 0.03,
+          lightness: 0.06,
         ),
       ),
     )
@@ -257,5 +259,15 @@ Color _indicatorColor(ColorScheme colorScheme) =>
 AppBarTheme _appBarTheme(ColorScheme colorScheme) {
   return AppBarTheme(
     backgroundColor: colorScheme.background,
+  );
+}
+
+SnackBarThemeData _snackBarThemeData(ColorScheme scheme) {
+  return SnackBarThemeData(
+    behavior: SnackBarBehavior.floating,
+    actionTextColor: scheme.primary.scale(
+      saturation: 0.5,
+      lightness: (scheme.isLight ? 0.2 : -0.5),
+    ),
   );
 }
