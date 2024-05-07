@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'color_x.dart';
 import 'theme_data_x.dart';
 
+typedef ThemePair = ({ThemeData lightTheme, ThemeData darkTheme});
+
 const lightBase = Colors.white;
-final darkBase = Colors.black.scale(lightness: 0.13);
+final darkBase = Colors.black.scale(lightness: 0.11);
 final darkMenuBase = Colors.black.scale(lightness: 0.1);
 const kContainerRadius = 10.0;
 const kButtonRadius = 6.0;
@@ -32,6 +34,7 @@ ThemePair phoenixTheme({
       switchTheme: _switchTheme(lightScheme),
       navigationRailTheme: _naviRailTheme(lightScheme),
       navigationBarTheme: _naviBarTheme(lightScheme),
+      appBarTheme: _appBarTheme(lightScheme),
     ),
     darkTheme: ThemeData(
       colorScheme: darkScheme,
@@ -48,6 +51,7 @@ ThemePair phoenixTheme({
       switchTheme: _switchTheme(darkScheme),
       navigationRailTheme: _naviRailTheme(darkScheme),
       navigationBarTheme: _naviBarTheme(darkScheme),
+      appBarTheme: _appBarTheme(darkScheme),
     )
   );
 }
@@ -60,7 +64,7 @@ ColorScheme _darkScheme(Color color) {
     surfaceTint: darkBase,
     background: darkBase,
     surface: darkBase.scale(
-      lightness: 0.04,
+      lightness: 0.03,
     ),
     outline: darkBase.scale(
       lightness: 0.28,
@@ -91,7 +95,7 @@ DividerThemeData _dividerTheme(ColorScheme colorScheme) => DividerThemeData(
     );
 
 Color _dividerColor(ColorScheme colorScheme) {
-  return colorScheme.outline.scale(lightness: colorScheme.isLight ? 0.3 : -0.3);
+  return colorScheme.outline.scale(lightness: colorScheme.isLight ? 0.3 : -0.4);
 }
 
 DialogTheme _dialogTheme(ColorScheme colorScheme) {
@@ -245,4 +249,8 @@ NavigationBarThemeData _naviBarTheme(ColorScheme colorScheme) {
 Color _indicatorColor(ColorScheme colorScheme) =>
     _dividerColor(colorScheme).withOpacity(0.8);
 
-typedef ThemePair = ({ThemeData lightTheme, ThemeData darkTheme});
+AppBarTheme _appBarTheme(ColorScheme colorScheme) {
+  return AppBarTheme(
+    backgroundColor: colorScheme.background,
+  );
+}

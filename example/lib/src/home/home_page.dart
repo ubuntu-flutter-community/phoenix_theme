@@ -139,7 +139,13 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
     final show = context.mq.size.width > 800;
     return Row(
       children: [
-        if (show) SizedBox(width: 80, child: AppBar()),
+        if (show)
+          SizedBox(
+            width: 80,
+            child: AppBar(
+              backgroundColor: context.theme.colorScheme.surface,
+            ),
+          ),
         if (show)
           const SizedBox(
             height: kToolbarHeight,
