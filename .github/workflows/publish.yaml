@@ -20,6 +20,5 @@ jobs:
       - uses: bluefireteam/flutter-gh-pages@v7
         with:
           workingDir: example
-          baseHref: /yaru.dart/
           webRenderer: canvaskit
           customArgs: --no-tree-shake-icons
