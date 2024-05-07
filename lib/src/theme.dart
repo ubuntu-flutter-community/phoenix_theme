@@ -23,6 +23,7 @@ ThemePair phoenixTheme({
       colorScheme: lightScheme,
       splashFactory: NoSplash.splashFactory,
       dividerColor: _dividerColor(lightScheme),
+      cardColor: _cardColor(lightScheme),
     ).copyWith(
       menuTheme: _menuTheme(lightScheme),
       popupMenuTheme: _popupMenuTheme(lightScheme),
@@ -36,11 +37,13 @@ ThemePair phoenixTheme({
       navigationBarTheme: _naviBarTheme(lightScheme),
       appBarTheme: _appBarTheme(lightScheme),
       snackBarTheme: _snackBarThemeData(lightScheme),
+      cardTheme: _cardTheme(lightScheme),
     ),
     darkTheme: ThemeData(
       colorScheme: darkScheme,
       splashFactory: NoSplash.splashFactory,
       dividerColor: _dividerColor(darkScheme),
+      cardColor: _cardColor(darkScheme),
     ).copyWith(
       menuTheme: _menuTheme(darkScheme),
       popupMenuTheme: _popupMenuTheme(darkScheme),
@@ -54,11 +57,7 @@ ThemePair phoenixTheme({
       navigationBarTheme: _naviBarTheme(darkScheme),
       appBarTheme: _appBarTheme(darkScheme),
       snackBarTheme: _snackBarThemeData(darkScheme),
-      cardTheme: CardTheme(
-        color: darkScheme.surface.scale(
-          lightness: 0.06,
-        ),
-      ),
+      cardTheme: _cardTheme(darkScheme),
     )
   );
 }
@@ -118,6 +117,18 @@ DialogTheme _dialogTheme(ColorScheme colorScheme) {
               color: Colors.white.withOpacity(0.2),
             ),
     ),
+  );
+}
+
+CardTheme _cardTheme(ColorScheme colorScheme) {
+  return CardTheme(
+    color: _cardColor(colorScheme),
+  );
+}
+
+Color _cardColor(ColorScheme colorScheme) {
+  return colorScheme.surface.scale(
+    lightness: colorScheme.isLight ? -0.04 : 0.02,
   );
 }
 
