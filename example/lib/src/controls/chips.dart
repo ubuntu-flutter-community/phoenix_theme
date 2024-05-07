@@ -13,7 +13,6 @@ class Chips extends StatelessWidget {
       children: [
         const Chip(label: Text('Chip')),
         Chip(
-          deleteIcon: const Icon(Icons.close),
           label: const Text('Deletable Chip'),
           onDeleted: () {},
         ),

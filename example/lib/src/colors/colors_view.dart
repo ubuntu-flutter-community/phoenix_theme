@@ -103,7 +103,7 @@ class ColorsView extends StatelessWidget {
             Text(
               colorName,
               style: TextStyle(
-                color: foregroundColor ?? foregroundColor?.contrastColor,
+                color: backgroundColor.contrastColor,
                 fontSize: 9,
               ),
             ),
@@ -113,7 +113,7 @@ class ColorsView extends StatelessWidget {
                   .replaceAll('Color(0x', '#')
                   .replaceAll(')', ''),
               style: TextStyle(
-                color: foregroundColor ?? backgroundColor.contrastColor,
+                color: backgroundColor.contrastColor,
                 fontSize: 7,
               ),
             ),
@@ -191,7 +191,10 @@ Map<String, (Color, Color?)> _getBaseColors(ThemeData theme) {
 Map<String, (Color, Color?)> getPrimaryColors(ThemeData theme) {
   return Map.fromEntries(
     Colors.accents.map(
-      (e) => MapEntry(e.toString(), (e, theme.colorScheme.onPrimary)),
+      (e) => MapEntry(
+        '#${e.value.toHex().toString()}',
+        (e, theme.colorScheme.onPrimary),
+      ),
     ),
   );
 }

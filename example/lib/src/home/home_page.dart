@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phoenix_theme/phoenix_theme.dart';
 
 import '../../colors.dart';
 import '../../containers.dart';
@@ -68,85 +69,7 @@ class HomePageState extends State<HomePage> {
         },
         items: _items,
       ),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: Center(
-          child: IconButton(
-            onPressed: () => themePageScaffoldKey.currentState?.openDrawer(),
-            icon: const Icon(Icons.menu),
-          ),
-        ),
-        title: const Text('Phoenix Theme'),
-        actions: [
-          IconButton(
-            onPressed: () => showSnack(context),
-            icon: const Icon(Icons.add),
-          ),
-          ValueListenableBuilder(
-            valueListenable: themeModeNotifier,
-            builder: (context, themeMode, widget) {
-              return PopupMenuButton<ThemeMode>(
-                onSelected: (v) => themeModeNotifier.value = v,
-                itemBuilder: (c) => ThemeMode.values
-                    .map(
-                      (e) => PopupMenuItem<ThemeMode>(
-                        value: e,
-                        child: Icon(
-                          [
-                            Icons.lightbulb,
-                            Icons.light_mode,
-                            Icons.dark_mode,
-                          ].elementAt(ThemeMode.values.indexOf(e)),
-                        ),
-                      ),
-                    )
-                    .toList(),
-                icon: Icon(
-                  [
-                    Icons.lightbulb,
-                    Icons.light_mode,
-                    Icons.dark_mode,
-                  ].elementAt(ThemeMode.values.indexOf(themeMode)),
-                ),
-              );
-            },
-          ),
-          ValueListenableBuilder(
-            valueListenable: colorNotifier,
-            builder: (context, color, widget) {
-              return PopupMenuButton<Color>(
-                onSelected: (v) => colorNotifier.value = v,
-                itemBuilder: (c) => Colors.accents
-                    .map(
-                      (e) => PopupMenuItem<Color>(
-                        value: e,
-                        child: Container(
-                          height: 30,
-                          width: 30,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: e,
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-                icon: Container(
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: color,
-                  ),
-                ),
-              );
-            },
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-        ],
-      ),
+      appBar: const _AppBar(),
       body: LayoutBuilder(
         builder: (context, constraints) {
           if (constraints.maxWidth > 800) {
@@ -206,6 +129,107 @@ class HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+class _AppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _AppBar();
+
+  @override
+  Widget build(BuildContext context) {
+    final show = context.mq.size.width > 800;
+    return Row(
+      children: [
+        if (show) SizedBox(width: 80, child: AppBar()),
+        if (show)
+          const SizedBox(
+            height: kToolbarHeight,
+            child: VerticalDivider(),
+          ),
+        Expanded(
+          child: AppBar(
+            automaticallyImplyLeading: false,
+            title: const Text('Phoenix Theme'),
+            actions: [
+              IconButton(
+                onPressed: () => showSnack(context),
+                icon: const Icon(Icons.add),
+              ),
+              ValueListenableBuilder(
+                valueListenable: themeModeNotifier,
+                builder: (context, themeMode, widget) {
+                  return IconButton(
+                    tooltip: '',
+                    onPressed: () {
+                      themeModeNotifier.value = themeMode == ThemeMode.dark
+                          ? ThemeMode.system
+                          : ThemeMode.values.elementAt(
+                              ThemeMode.values.indexOf(themeMode) + 1,
+                            );
+                    },
+                    icon: Icon(
+                      [
+                        Icons.theater_comedy_rounded,
+                        Icons.light_mode,
+                        Icons.dark_mode,
+                      ].elementAt(ThemeMode.values.indexOf(themeMode)),
+                    ),
+                  );
+                },
+              ),
+              ValueListenableBuilder(
+                valueListenable: colorNotifier,
+                builder: (context, color, widget) {
+                  return PopupMenuButton<Color>(
+                    onSelected: (v) => colorNotifier.value = v,
+                    itemBuilder: (c) => Colors.accents
+                        .map(
+                          (e) => PopupMenuItem<Color>(
+                            value: e,
+                            child: Container(
+                              height: 25,
+                              width: 25,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: e,
+                                border: Border.all(
+                                  color: e.scale(
+                                    lightness:
+                                        context.theme.isLight ? -0.5 : 0.5,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    icon: Container(
+                      height: 25,
+                      width: 25,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: color.scale(
+                            lightness: context.theme.isLight ? -0.5 : 0.5,
+                          ),
+                        ),
+                        shape: BoxShape.circle,
+                        color: color,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size(0, kToolbarHeight);
 }
 
 class _Drawer extends StatelessWidget {

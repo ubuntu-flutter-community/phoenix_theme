@@ -152,6 +152,6 @@ extension ColorX on Color {
           : Colors.white;
 }
 
-extension on int {
+extension IntX on int {
   String toHex() => toRadixString(16).padLeft(2, '0');
 }
