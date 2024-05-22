@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'color_x.dart';
@@ -5,9 +8,9 @@ import 'theme_data_x.dart';
 
 typedef ThemePair = ({ThemeData lightTheme, ThemeData darkTheme});
 
-const lightBase = Colors.white;
-final darkBase = Colors.black.scale(lightness: 0.11);
-final darkMenuBase = Colors.black.scale(lightness: 0.1);
+const _lightBase = Colors.white;
+final _darkBase = Colors.black.scale(lightness: 0.11);
+final _darkMenuBase = Colors.black.scale(lightness: 0.1);
 const kContainerRadius = 10.0;
 const kButtonRadius = 6.0;
 const kMenuRadius = 8.0;
@@ -21,10 +24,11 @@ ThemePair phoenixTheme({
   return (
     lightTheme: ThemeData(
       colorScheme: lightScheme,
+      scaffoldBackgroundColor: lightScheme.surface,
       splashFactory: NoSplash.splashFactory,
       dividerColor: _dividerColor(lightScheme),
       cardColor: _cardColor(lightScheme),
-    ).copyWith(
+      // inputDecorationTheme: _inputDecorationTheme(lightScheme),
       menuTheme: _menuTheme(lightScheme),
       popupMenuTheme: _popupMenuTheme(lightScheme),
       dialogTheme: _dialogTheme(lightScheme),
@@ -38,13 +42,15 @@ ThemePair phoenixTheme({
       appBarTheme: _appBarTheme(lightScheme),
       snackBarTheme: _snackBarThemeData(lightScheme),
       cardTheme: _cardTheme(lightScheme),
+      drawerTheme: _drawerTheme(lightScheme),
     ),
     darkTheme: ThemeData(
       colorScheme: darkScheme,
+      scaffoldBackgroundColor: darkScheme.surface,
       splashFactory: NoSplash.splashFactory,
       dividerColor: _dividerColor(darkScheme),
       cardColor: _cardColor(darkScheme),
-    ).copyWith(
+      // inputDecorationTheme: _inputDecorationTheme(darkScheme),
       menuTheme: _menuTheme(darkScheme),
       popupMenuTheme: _popupMenuTheme(darkScheme),
       dialogTheme: _dialogTheme(darkScheme),
@@ -58,6 +64,7 @@ ThemePair phoenixTheme({
       appBarTheme: _appBarTheme(darkScheme),
       snackBarTheme: _snackBarThemeData(darkScheme),
       cardTheme: _cardTheme(darkScheme),
+      drawerTheme: _drawerTheme(darkScheme),
     )
   );
 }
@@ -66,15 +73,9 @@ ColorScheme _darkScheme(Color color) {
   return ColorScheme.fromSeed(
     seedColor: color,
     brightness: Brightness.dark,
-  ).copyWith(
-    surfaceTint: darkBase,
-    background: darkBase,
-    surface: darkBase.scale(
-      lightness: 0.03,
-    ),
-    outline: darkBase.scale(
-      lightness: 0.28,
-    ),
+    surfaceTint: _darkBase,
+    surface: _darkBase.scale(lightness: 0.03),
+    outline: _darkBase.scale(lightness: 0.28),
   );
 }
 
@@ -82,15 +83,9 @@ ColorScheme _lightScheme(Color color) {
   return ColorScheme.fromSeed(
     seedColor: color,
     brightness: Brightness.light,
-  ).copyWith(
-    surfaceTint: lightBase,
-    background: lightBase,
-    surface: lightBase.scale(
-      lightness: -0.04,
-    ),
-    outline: Colors.white.scale(
-      lightness: -0.3,
-    ),
+    surface: _lightBase,
+    surfaceTint: _lightBase,
+    outline: Colors.white.scale(lightness: -0.3),
   );
 }
 
@@ -105,7 +100,7 @@ Color _dividerColor(ColorScheme colorScheme) {
 }
 
 DialogTheme _dialogTheme(ColorScheme colorScheme) {
-  final bgColor = colorScheme.isLight ? lightBase : darkMenuBase;
+  final bgColor = colorScheme.isLight ? _lightBase : _darkMenuBase;
   return DialogTheme(
     backgroundColor: bgColor,
     surfaceTintColor: bgColor,
@@ -133,7 +128,7 @@ Color _cardColor(ColorScheme colorScheme) {
 }
 
 PopupMenuThemeData _popupMenuTheme(ColorScheme colorScheme) {
-  final bgColor = colorScheme.isLight ? lightBase : darkMenuBase;
+  final bgColor = colorScheme.isLight ? _lightBase : _darkMenuBase;
   return PopupMenuThemeData(
     color: bgColor,
     surfaceTintColor: bgColor,
@@ -150,11 +145,11 @@ PopupMenuThemeData _popupMenuTheme(ColorScheme colorScheme) {
 }
 
 MenuStyle _menuStyle(ColorScheme colorScheme) {
-  final bgColor = colorScheme.isLight ? lightBase : darkMenuBase;
+  final bgColor = colorScheme.isLight ? _lightBase : _darkMenuBase;
 
   return MenuStyle(
-    surfaceTintColor: MaterialStateColor.resolveWith((states) => bgColor),
-    shape: MaterialStateProperty.resolveWith(
+    surfaceTintColor: WidgetStateColor.resolveWith((states) => bgColor),
+    shape: WidgetStateProperty.resolveWith(
       (states) => RoundedRectangleBorder(
         side: BorderSide(
           color: colorScheme.onSurface.withOpacity(
@@ -165,7 +160,7 @@ MenuStyle _menuStyle(ColorScheme colorScheme) {
         borderRadius: BorderRadius.circular(kMenuRadius),
       ),
     ),
-    side: MaterialStateBorderSide.resolveWith(
+    side: WidgetStateBorderSide.resolveWith(
       (states) => BorderSide(
         color: colorScheme.onSurface.withOpacity(
           colorScheme.isLight ? 0.3 : 0.2,
@@ -173,8 +168,8 @@ MenuStyle _menuStyle(ColorScheme colorScheme) {
         width: 1,
       ),
     ),
-    elevation: MaterialStateProperty.resolveWith((states) => 1),
-    backgroundColor: MaterialStateProperty.resolveWith((states) => bgColor),
+    elevation: WidgetStateProperty.resolveWith((states) => 1),
+    backgroundColor: WidgetStateProperty.resolveWith((states) => bgColor),
   );
 }
 
@@ -205,21 +200,21 @@ SliderThemeData _sliderTheme(ColorScheme colorScheme) {
 
 SwitchThemeData _switchTheme(ColorScheme colorScheme) {
   return SwitchThemeData(
-    trackOutlineColor: MaterialStateColor.resolveWith(
+    trackOutlineColor: WidgetStateColor.resolveWith(
       (states) => Colors.transparent,
     ),
-    thumbColor: MaterialStateProperty.resolveWith(
+    thumbColor: WidgetStateProperty.resolveWith(
       (states) => _getSwitchThumbColor(states, colorScheme),
     ),
-    trackColor: MaterialStateProperty.resolveWith(
+    trackColor: WidgetStateProperty.resolveWith(
       (states) => _getSwitchTrackColor(states, colorScheme),
     ),
   );
 }
 
-Color _getSwitchThumbColor(Set<MaterialState> states, ColorScheme colorScheme) {
-  if (states.contains(MaterialState.disabled)) {
-    if (states.contains(MaterialState.selected)) {
+Color _getSwitchThumbColor(Set<WidgetState> states, ColorScheme colorScheme) {
+  if (states.contains(WidgetState.disabled)) {
+    if (states.contains(WidgetState.selected)) {
       return colorScheme.onSurface.withOpacity(0.5);
     }
     return colorScheme.onSurface.withOpacity(0.5);
@@ -228,18 +223,18 @@ Color _getSwitchThumbColor(Set<MaterialState> states, ColorScheme colorScheme) {
   }
 }
 
-Color _getSwitchTrackColor(Set<MaterialState> states, ColorScheme colorScheme) {
+Color _getSwitchTrackColor(Set<WidgetState> states, ColorScheme colorScheme) {
   final uncheckedColor = colorScheme.onSurface.withOpacity(.25);
   final disabledUncheckedColor = colorScheme.onSurface.withOpacity(.15);
   final disabledCheckedColor = colorScheme.onSurface.withOpacity(.18);
 
-  if (states.contains(MaterialState.disabled)) {
-    if (states.contains(MaterialState.selected)) {
+  if (states.contains(WidgetState.disabled)) {
+    if (states.contains(WidgetState.selected)) {
       return disabledCheckedColor;
     }
     return disabledUncheckedColor;
   } else {
-    if (states.contains(MaterialState.selected)) {
+    if (states.contains(WidgetState.selected)) {
       return colorScheme.primary;
     } else {
       return uncheckedColor;
@@ -261,7 +256,10 @@ NavigationRailThemeData _naviRailTheme(ColorScheme colorScheme) {
 }
 
 NavigationBarThemeData _naviBarTheme(ColorScheme colorScheme) {
-  return NavigationBarThemeData(indicatorColor: _indicatorColor(colorScheme));
+  return NavigationBarThemeData(
+    indicatorColor: _indicatorColor(colorScheme),
+    backgroundColor: colorScheme.surface,
+  );
 }
 
 Color _indicatorColor(ColorScheme colorScheme) =>
@@ -269,16 +267,115 @@ Color _indicatorColor(ColorScheme colorScheme) =>
 
 AppBarTheme _appBarTheme(ColorScheme colorScheme) {
   return AppBarTheme(
-    backgroundColor: colorScheme.background,
+    backgroundColor: colorScheme.surface,
   );
 }
 
-SnackBarThemeData _snackBarThemeData(ColorScheme scheme) {
+DrawerThemeData _drawerTheme(ColorScheme colorScheme) {
+  return DrawerThemeData(
+    shape: RoundedRectangleBorder(
+      borderRadius: const BorderRadiusDirectional.only(
+        topEnd: Radius.circular(kContainerRadius),
+        bottomEnd: Radius.circular(kContainerRadius),
+      ),
+      side: colorScheme.isLight
+          ? BorderSide.none
+          : BorderSide(
+              color: _dividerColor(colorScheme),
+            ),
+    ),
+    backgroundColor: colorScheme.surface,
+  );
+}
+
+SnackBarThemeData _snackBarThemeData(ColorScheme colorScheme) {
   return SnackBarThemeData(
     behavior: SnackBarBehavior.floating,
-    actionTextColor: scheme.primary.scale(
+    actionTextColor: colorScheme.primary.scale(
       saturation: 0.5,
-      lightness: (scheme.isLight ? 0.2 : -0.5),
+      lightness: (colorScheme.isLight ? 0.2 : -0.5),
     ),
   );
 }
+
+// InputDecorationTheme _inputDecorationTheme(ColorScheme colorScheme) {
+//   final radius = BorderRadius.circular(kButtonRadius);
+//   const width = 1.0;
+//   const strokeAlign = 0.0;
+//   final border = colorScheme.outline;
+//   final fill = border.scale(
+//     lightness: colorScheme.isLight ? 0.8 : -0.5,
+//   );
+
+//   final disabledBorder =
+//       border.scale(lightness: colorScheme.isLight ? 0.2 : -0.2);
+
+//   const textStyle = TextStyle(
+//     fontSize: 14,
+//     fontWeight: FontWeight.normal,
+//   );
+//   return InputDecorationTheme(
+//     filled: true,
+//     fillColor: fill,
+//     border: OutlineInputBorder(
+//       borderSide: BorderSide(
+//         width: width,
+//         color: border,
+//       ),
+//       borderRadius: radius,
+//     ),
+//     focusedBorder: OutlineInputBorder(
+//       borderSide: BorderSide(width: width, color: colorScheme.primary),
+//       borderRadius: radius,
+//     ),
+//     enabledBorder: OutlineInputBorder(
+//       borderSide:
+//           BorderSide(width: width, color: border, strokeAlign: strokeAlign),
+//       borderRadius: radius,
+//     ),
+//     activeIndicatorBorder:
+//         const BorderSide(width: width, strokeAlign: strokeAlign),
+//     outlineBorder: const BorderSide(width: width, strokeAlign: strokeAlign),
+//     focusedErrorBorder: OutlineInputBorder(
+//       borderSide: BorderSide(
+//         width: width,
+//         color: colorScheme.error,
+//         strokeAlign: strokeAlign,
+//       ),
+//       borderRadius: radius,
+//     ),
+//     errorBorder: OutlineInputBorder(
+//       borderSide: BorderSide(
+//         width: width,
+//         color: colorScheme.error,
+//         strokeAlign: strokeAlign,
+//       ),
+//       borderRadius: radius,
+//     ),
+//     disabledBorder: OutlineInputBorder(
+//       borderSide: BorderSide(
+//         width: width,
+//         color: disabledBorder,
+//         strokeAlign: strokeAlign,
+//       ),
+//       borderRadius: radius,
+//     ),
+//     iconColor: colorScheme.onSurface,
+//     helperStyle: textStyle,
+//     hintStyle: textStyle,
+//     labelStyle: textStyle,
+//     suffixStyle: textStyle.copyWith(
+//       color: colorScheme.onSurface.scale(lightness: -0.2),
+//     ),
+//     prefixStyle: textStyle.copyWith(
+//       color: colorScheme.onSurface.scale(lightness: -0.2),
+//     ),
+//     isDense: !isMobile,
+//     contentPadding: isMobile
+//         ? null
+//         : const EdgeInsets.only(left: 12, right: 12, bottom: 9, top: 10),
+//   );
+// }
+
+bool get isMobile =>
+    !kIsWeb && Platform.isAndroid || Platform.isIOS || Platform.isFuchsia;

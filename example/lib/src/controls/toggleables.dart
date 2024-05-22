@@ -1,34 +1,29 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
-
-class Toggleables extends StatelessWidget {
+class Toggleables extends StatefulWidget {
   const Toggleables({super.key});
 
+  @override
+  State<Toggleables> createState() => _ToggleablesState();
+}
+
+class _ToggleablesState extends State<Toggleables> {
+  var _selected = <String>{};
   @override
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 10,
       runSpacing: 10,
       children: [
-        Wrap(
-          spacing: 10,
-          runSpacing: 10,
-          children: [
-            const Text('ToggleButtons:'),
-            ToggleButtons(
-              isSelected: const [true, false, false],
-              onPressed: (v) {},
-              children: const [Text('Off'), Text('Off'), Text('Off')],
-            ),
-            ToggleButtons(
-              isSelected: const [true, false, false],
-              children: const [Text('Off'), Text('Off'), Text('Off')],
-            ),
-            const Divider(
-              height: 2 * kWrapSpacing,
-            ),
-          ],
+        SegmentedButton<String>(
+          showSelectedIcon: false,
+          emptySelectionAllowed: true,
+          onSelectionChanged: (v) => setState(() => _selected = v),
+          multiSelectionEnabled: true,
+          segments: ['Ka', 'Me', 'Ha', 'Meh', 'Hah']
+              .map((e) => ButtonSegment(value: e, label: Text(e)))
+              .toList(),
+          selected: _selected,
         ),
         Row(
           children: [
