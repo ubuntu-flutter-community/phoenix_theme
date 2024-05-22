@@ -74,7 +74,7 @@ ColorScheme _darkScheme(Color color) {
     seedColor: color,
     brightness: Brightness.dark,
     surfaceTint: _darkBase,
-    surface: _darkBase.scale(lightness: 0.03),
+    surface: _darkBase,
     outline: _darkBase.scale(lightness: 0.28),
   );
 }
@@ -268,6 +268,7 @@ Color _indicatorColor(ColorScheme colorScheme) =>
 AppBarTheme _appBarTheme(ColorScheme colorScheme) {
   return AppBarTheme(
     backgroundColor: colorScheme.surface,
+    surfaceTintColor: colorScheme.surface,
   );
 }
 
