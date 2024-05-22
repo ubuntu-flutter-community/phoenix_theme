@@ -9,8 +9,8 @@ import 'theme_data_x.dart';
 typedef ThemePair = ({ThemeData lightTheme, ThemeData darkTheme});
 
 const _lightBase = Colors.white;
-final _darkBase = Colors.black.scale(lightness: 0.11);
-final _darkMenuBase = Colors.black.scale(lightness: 0.1);
+final _darkBase = Colors.black.scale(lightness: 0.09);
+final _darkMenuBase = Colors.black.scale(lightness: 0.07);
 const kContainerRadius = 10.0;
 const kButtonRadius = 6.0;
 const kMenuRadius = 8.0;
@@ -32,6 +32,7 @@ ThemePair phoenixTheme({
       menuTheme: _menuTheme(lightScheme),
       popupMenuTheme: _popupMenuTheme(lightScheme),
       dialogTheme: _dialogTheme(lightScheme),
+      dialogBackgroundColor: _menuBg(lightScheme),
       dropdownMenuTheme: _dropdownMenuTheme(lightScheme),
       sliderTheme: _sliderTheme(lightScheme),
       dividerTheme: _dividerTheme(lightScheme),
@@ -54,6 +55,7 @@ ThemePair phoenixTheme({
       menuTheme: _menuTheme(darkScheme),
       popupMenuTheme: _popupMenuTheme(darkScheme),
       dialogTheme: _dialogTheme(darkScheme),
+      dialogBackgroundColor: _menuBg(lightScheme),
       dropdownMenuTheme: _dropdownMenuTheme(darkScheme),
       sliderTheme: _sliderTheme(darkScheme),
       dividerTheme: _dividerTheme(darkScheme),
@@ -75,6 +77,8 @@ ColorScheme _darkScheme(Color color) {
     brightness: Brightness.dark,
     surfaceTint: _darkBase,
     surface: _darkBase,
+    // ignore: deprecated_member_use
+    background: _darkBase,
     outline: _darkBase.scale(lightness: 0.28),
   );
 }
@@ -100,7 +104,7 @@ Color _dividerColor(ColorScheme colorScheme) {
 }
 
 DialogTheme _dialogTheme(ColorScheme colorScheme) {
-  final bgColor = colorScheme.isLight ? _lightBase : _darkMenuBase;
+  final bgColor = _menuBg(colorScheme);
   return DialogTheme(
     backgroundColor: bgColor,
     surfaceTintColor: bgColor,
@@ -128,7 +132,7 @@ Color _cardColor(ColorScheme colorScheme) {
 }
 
 PopupMenuThemeData _popupMenuTheme(ColorScheme colorScheme) {
-  final bgColor = colorScheme.isLight ? _lightBase : _darkMenuBase;
+  final bgColor = _menuBg(colorScheme);
   return PopupMenuThemeData(
     color: bgColor,
     surfaceTintColor: bgColor,
@@ -145,7 +149,7 @@ PopupMenuThemeData _popupMenuTheme(ColorScheme colorScheme) {
 }
 
 MenuStyle _menuStyle(ColorScheme colorScheme) {
-  final bgColor = colorScheme.isLight ? _lightBase : _darkMenuBase;
+  final bgColor = _menuBg(colorScheme);
 
   return MenuStyle(
     surfaceTintColor: WidgetStateColor.resolveWith((states) => bgColor),
@@ -172,6 +176,9 @@ MenuStyle _menuStyle(ColorScheme colorScheme) {
     backgroundColor: WidgetStateProperty.resolveWith((states) => bgColor),
   );
 }
+
+Color _menuBg(ColorScheme colorScheme) =>
+    colorScheme.isLight ? _lightBase : _darkMenuBase;
 
 MenuThemeData _menuTheme(ColorScheme colorScheme) {
   return MenuThemeData(
