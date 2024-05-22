@@ -55,7 +55,7 @@ ThemePair phoenixTheme({
       menuTheme: _menuTheme(darkScheme),
       popupMenuTheme: _popupMenuTheme(darkScheme),
       dialogTheme: _dialogTheme(darkScheme),
-      dialogBackgroundColor: _menuBg(lightScheme),
+      dialogBackgroundColor: _menuBg(darkScheme),
       dropdownMenuTheme: _dropdownMenuTheme(darkScheme),
       sliderTheme: _sliderTheme(darkScheme),
       dividerTheme: _dividerTheme(darkScheme),
