@@ -28,7 +28,6 @@ ThemePair phoenixTheme({
       splashFactory: NoSplash.splashFactory,
       dividerColor: _dividerColor(lightScheme),
       cardColor: _cardColor(lightScheme),
-      // inputDecorationTheme: _inputDecorationTheme(lightScheme),
       menuTheme: _menuTheme(lightScheme),
       popupMenuTheme: _popupMenuTheme(lightScheme),
       dialogTheme: _dialogTheme(lightScheme),
@@ -38,6 +37,9 @@ ThemePair phoenixTheme({
       dividerTheme: _dividerTheme(lightScheme),
       progressIndicatorTheme: _progressIndicatorTheme(lightScheme),
       switchTheme: _switchTheme(lightScheme),
+      checkboxTheme: _checkBoxTheme(lightScheme),
+      floatingActionButtonTheme: _floatingActionButtonTheme(lightScheme),
+      elevatedButtonTheme: _elevatedButtonTheme(lightScheme),
       navigationRailTheme: _naviRailTheme(lightScheme),
       navigationBarTheme: _naviBarTheme(lightScheme),
       appBarTheme: _appBarTheme(lightScheme),
@@ -51,7 +53,6 @@ ThemePair phoenixTheme({
       splashFactory: NoSplash.splashFactory,
       dividerColor: _dividerColor(darkScheme),
       cardColor: _cardColor(darkScheme),
-      // inputDecorationTheme: _inputDecorationTheme(darkScheme),
       menuTheme: _menuTheme(darkScheme),
       popupMenuTheme: _popupMenuTheme(darkScheme),
       dialogTheme: _dialogTheme(darkScheme),
@@ -61,6 +62,9 @@ ThemePair phoenixTheme({
       dividerTheme: _dividerTheme(darkScheme),
       progressIndicatorTheme: _progressIndicatorTheme(darkScheme),
       switchTheme: _switchTheme(darkScheme),
+      checkboxTheme: _checkBoxTheme(darkScheme),
+      floatingActionButtonTheme: _floatingActionButtonTheme(darkScheme),
+      elevatedButtonTheme: _elevatedButtonTheme(darkScheme),
       navigationRailTheme: _naviRailTheme(darkScheme),
       navigationBarTheme: _naviBarTheme(darkScheme),
       appBarTheme: _appBarTheme(darkScheme),
@@ -194,21 +198,55 @@ DropdownMenuThemeData _dropdownMenuTheme(ColorScheme colorScheme) {
 
 SliderThemeData _sliderTheme(ColorScheme colorScheme) {
   return SliderThemeData(
-    thumbColor: Colors.white,
     overlayShape: const RoundSliderOverlayShape(
       overlayRadius: 13,
     ),
     overlayColor:
         colorScheme.primary.withOpacity(colorScheme.isLight ? 0.4 : 0.7),
-    thumbShape: const RoundSliderThumbShape(elevation: 3.0),
-    inactiveTrackColor: colorScheme.onSurface.withOpacity(0.3),
+    inactiveTrackColor: colorScheme.primary.withOpacity(0.5),
+    trackShape: CustomTrackShape(),
   );
+}
+
+class CustomTrackShape extends RoundedRectSliderTrackShape {
+  @override
+  void paint(
+    PaintingContext context,
+    Offset offset, {
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required Animation<double> enableAnimation,
+    required TextDirection textDirection,
+    required Offset thumbCenter,
+    Offset? secondaryOffset,
+    bool isDiscrete = false,
+    bool isEnabled = false,
+    double additionalActiveTrackHeight = 0,
+  }) {
+    super.paint(
+      context,
+      offset,
+      parentBox: parentBox,
+      sliderTheme: sliderTheme,
+      enableAnimation: enableAnimation,
+      textDirection: textDirection,
+      thumbCenter: thumbCenter,
+      isDiscrete: isDiscrete,
+      isEnabled: isEnabled,
+      additionalActiveTrackHeight: 0,
+    );
+  }
 }
 
 SwitchThemeData _switchTheme(ColorScheme colorScheme) {
   return SwitchThemeData(
     trackOutlineColor: WidgetStateColor.resolveWith(
-      (states) => Colors.transparent,
+      (states) => switch (states.toList()) {
+        [WidgetState.disabled] ||
+        [WidgetState.disabled, WidgetState.selected] =>
+          colorScheme.onSurface.withOpacity(0.3),
+        _ => colorScheme.primary,
+      },
     ),
     thumbColor: WidgetStateProperty.resolveWith(
       (states) => _getSwitchThumbColor(states, colorScheme),
@@ -226,33 +264,61 @@ Color _getSwitchThumbColor(Set<WidgetState> states, ColorScheme colorScheme) {
     }
     return colorScheme.onSurface.withOpacity(0.5);
   } else {
-    return colorScheme.onPrimary;
+    return colorScheme.isLight ? colorScheme.primary : colorScheme.primaryFixed;
   }
 }
 
 Color _getSwitchTrackColor(Set<WidgetState> states, ColorScheme colorScheme) {
-  final uncheckedColor = colorScheme.onSurface.withOpacity(.25);
-  final disabledUncheckedColor = colorScheme.onSurface.withOpacity(.15);
-  final disabledCheckedColor = colorScheme.onSurface.withOpacity(.18);
+  return switch (states.toList()) {
+    [WidgetState.disabled] ||
+    [WidgetState.disabled, WidgetState.selected] =>
+      colorScheme.onSurface.withOpacity(0.3),
+    [] => colorScheme.surface,
+    _ => colorScheme.primaryContainer,
+  };
+}
 
-  if (states.contains(WidgetState.disabled)) {
-    if (states.contains(WidgetState.selected)) {
-      return disabledCheckedColor;
-    }
-    return disabledUncheckedColor;
-  } else {
-    if (states.contains(WidgetState.selected)) {
-      return colorScheme.primary;
-    } else {
-      return uncheckedColor;
-    }
-  }
+CheckboxThemeData _checkBoxTheme(ColorScheme colorScheme) {
+  return CheckboxThemeData(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
+  );
 }
 
 ProgressIndicatorThemeData _progressIndicatorTheme(ColorScheme colorScheme) {
   return ProgressIndicatorThemeData(
     circularTrackColor: colorScheme.primary.withOpacity(0.4),
     linearTrackColor: colorScheme.primary.withOpacity(0.4),
+  );
+}
+
+FloatingActionButtonThemeData _floatingActionButtonTheme(
+  ColorScheme colorScheme,
+) {
+  const elevation = 1.0;
+  return FloatingActionButtonThemeData(
+    elevation: elevation,
+    focusElevation: elevation,
+    hoverElevation: elevation,
+    disabledElevation: elevation,
+    highlightElevation: elevation,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(30),
+    ),
+  );
+}
+
+ElevatedButtonThemeData _elevatedButtonTheme(ColorScheme colorScheme) {
+  return ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: colorScheme.isLight
+          ? colorScheme.primaryFixed
+          : colorScheme.primaryContainer,
+      elevation: 0,
+      shadowColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
+    ),
   );
 }
 
@@ -305,85 +371,6 @@ SnackBarThemeData _snackBarThemeData(ColorScheme colorScheme) {
     ),
   );
 }
-
-// InputDecorationTheme _inputDecorationTheme(ColorScheme colorScheme) {
-//   final radius = BorderRadius.circular(kButtonRadius);
-//   const width = 1.0;
-//   const strokeAlign = 0.0;
-//   final border = colorScheme.outline;
-//   final fill = border.scale(
-//     lightness: colorScheme.isLight ? 0.8 : -0.5,
-//   );
-
-//   final disabledBorder =
-//       border.scale(lightness: colorScheme.isLight ? 0.2 : -0.2);
-
-//   const textStyle = TextStyle(
-//     fontSize: 14,
-//     fontWeight: FontWeight.normal,
-//   );
-//   return InputDecorationTheme(
-//     filled: true,
-//     fillColor: fill,
-//     border: OutlineInputBorder(
-//       borderSide: BorderSide(
-//         width: width,
-//         color: border,
-//       ),
-//       borderRadius: radius,
-//     ),
-//     focusedBorder: OutlineInputBorder(
-//       borderSide: BorderSide(width: width, color: colorScheme.primary),
-//       borderRadius: radius,
-//     ),
-//     enabledBorder: OutlineInputBorder(
-//       borderSide:
-//           BorderSide(width: width, color: border, strokeAlign: strokeAlign),
-//       borderRadius: radius,
-//     ),
-//     activeIndicatorBorder:
-//         const BorderSide(width: width, strokeAlign: strokeAlign),
-//     outlineBorder: const BorderSide(width: width, strokeAlign: strokeAlign),
-//     focusedErrorBorder: OutlineInputBorder(
-//       borderSide: BorderSide(
-//         width: width,
-//         color: colorScheme.error,
-//         strokeAlign: strokeAlign,
-//       ),
-//       borderRadius: radius,
-//     ),
-//     errorBorder: OutlineInputBorder(
-//       borderSide: BorderSide(
-//         width: width,
-//         color: colorScheme.error,
-//         strokeAlign: strokeAlign,
-//       ),
-//       borderRadius: radius,
-//     ),
-//     disabledBorder: OutlineInputBorder(
-//       borderSide: BorderSide(
-//         width: width,
-//         color: disabledBorder,
-//         strokeAlign: strokeAlign,
-//       ),
-//       borderRadius: radius,
-//     ),
-//     iconColor: colorScheme.onSurface,
-//     helperStyle: textStyle,
-//     hintStyle: textStyle,
-//     labelStyle: textStyle,
-//     suffixStyle: textStyle.copyWith(
-//       color: colorScheme.onSurface.scale(lightness: -0.2),
-//     ),
-//     prefixStyle: textStyle.copyWith(
-//       color: colorScheme.onSurface.scale(lightness: -0.2),
-//     ),
-//     isDense: !isMobile,
-//     contentPadding: isMobile
-//         ? null
-//         : const EdgeInsets.only(left: 12, right: 12, bottom: 9, top: 10),
-//   );
-// }
 
 bool get isMobile =>
     !kIsWeb && Platform.isAndroid || Platform.isIOS || Platform.isFuchsia;
