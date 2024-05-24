@@ -273,6 +273,7 @@ Color _getSwitchTrackColor(Set<WidgetState> states, ColorScheme colorScheme) {
     [WidgetState.disabled] ||
     [WidgetState.disabled, WidgetState.selected] =>
       colorScheme.onSurface.withOpacity(0.3),
+    [WidgetState.hovered] => Colors.transparent,
     [] => colorScheme.surface,
     _ => colorScheme.primaryContainer,
   };
