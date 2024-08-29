@@ -54,7 +54,12 @@ ThemeData _phoenixTheme({
       Size(buttonHeight ?? _kButtonHeight, buttonHeight ?? _kButtonHeight);
 
   return ThemeData(
-    iconTheme: isMobile ? null : const IconThemeData(size: 20),
+    iconTheme: isMobile
+        ? null
+        : IconThemeData(
+            size: 20,
+            color: colorScheme.onSurface,
+          ),
     colorScheme: colorScheme,
     scaffoldBackgroundColor: colorScheme.surface,
     splashFactory: NoSplash.splashFactory,
@@ -76,12 +81,12 @@ ThemeData _phoenixTheme({
       buttonShape: buttonShape,
       buttonSize: buttonSize,
     ),
-    outlinedButtonTheme: _outlinedButtonThemeData(
+    outlinedButtonTheme: _outlinedButtonTheme(
       colorScheme: colorScheme,
       buttonShape: buttonShape,
       buttonSize: buttonSize,
     ),
-    filledButtonTheme: _filledButtonThemeData(
+    filledButtonTheme: _filledButtonTheme(
       colorScheme: colorScheme,
       buttonShape: buttonShape,
       buttonSize: buttonSize,
@@ -389,7 +394,7 @@ ElevatedButtonThemeData _elevatedButtonTheme({
   );
 }
 
-OutlinedButtonThemeData _outlinedButtonThemeData({
+OutlinedButtonThemeData _outlinedButtonTheme({
   required ColorScheme colorScheme,
   required Size buttonSize,
   required RoundedRectangleBorder buttonShape,
@@ -406,7 +411,7 @@ OutlinedButtonThemeData _outlinedButtonThemeData({
   );
 }
 
-FilledButtonThemeData _filledButtonThemeData({
+FilledButtonThemeData _filledButtonTheme({
   required ColorScheme colorScheme,
   required Size buttonSize,
   required RoundedRectangleBorder buttonShape,
