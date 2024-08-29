@@ -516,7 +516,7 @@ SnackBarThemeData _snackBarThemeData(ColorScheme colorScheme) {
 }
 
 bool get isMobile =>
-    !kIsWeb && Platform.isAndroid || Platform.isIOS || Platform.isFuchsia;
+    !kIsWeb && (Platform.isAndroid || Platform.isIOS || Platform.isFuchsia);
 
 bool get isDesktop =>
     !kIsWeb && (Platform.isLinux || Platform.isMacOS || Platform.isWindows);
