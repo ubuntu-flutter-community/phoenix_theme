@@ -7,70 +7,127 @@ class FontsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return ListView(
       padding: const EdgeInsets.all(kWrapSpacing),
       children: <Widget>[
-        Text(
-          'displayLarge',
-          style: Theme.of(context).textTheme.displayLarge,
+        _TextShow(
+          name: 'displayLarge',
+          style: theme.textTheme.displayLarge,
         ),
-        Text(
-          'displayMedium',
-          style: Theme.of(context).textTheme.displayMedium,
+        _TextShow(
+          name: 'displayMedium',
+          style: theme.textTheme.displayMedium,
         ),
-        Text(
-          'displaySmall',
-          style: Theme.of(context).textTheme.displaySmall,
+        _TextShow(
+          name: 'displaySmall',
+          style: theme.textTheme.displaySmall,
         ),
-        Text(
-          'headlineLarge',
-          style: Theme.of(context).textTheme.headlineLarge,
+        _TextShow(
+          name: 'headlineLarge',
+          style: theme.textTheme.headlineLarge,
         ),
-        Text(
-          'headlineMedium',
-          style: Theme.of(context).textTheme.headlineMedium,
+        _TextShow(
+          name: 'headlineMedium',
+          style: theme.textTheme.headlineMedium,
         ),
-        Text(
-          'headlineSmall',
-          style: Theme.of(context).textTheme.headlineSmall,
+        _TextShow(
+          name: 'headlineSmall',
+          style: theme.textTheme.headlineSmall,
         ),
-        Text(
-          'titleLarge',
-          style: Theme.of(context).textTheme.titleLarge,
+        _TextShow(
+          name: 'titleLarge',
+          style: theme.textTheme.titleLarge,
         ),
-        Text(
-          'titleMedium',
-          style: Theme.of(context).textTheme.titleMedium,
+        _TextShow(
+          name: 'titleMedium',
+          style: theme.textTheme.titleMedium,
         ),
-        Text(
-          'titleSmall',
-          style: Theme.of(context).textTheme.titleSmall,
+        _TextShow(
+          name: 'titleSmall',
+          style: theme.textTheme.titleSmall,
         ),
-        Text(
-          'bodyLarge',
-          style: Theme.of(context).textTheme.bodyLarge,
+        _TextShow(
+          name: 'bodyLarge',
+          style: theme.textTheme.bodyLarge,
         ),
-        Text(
-          'bodyMedium',
-          style: Theme.of(context).textTheme.bodyMedium,
+        _TextShow(
+          name: 'bodyMedium',
+          style: theme.textTheme.bodyMedium,
         ),
-        Text(
-          'bodySmall',
-          style: Theme.of(context).textTheme.bodySmall,
+        _TextShow(
+          name: 'bodySmall',
+          style: theme.textTheme.bodySmall,
         ),
-        Text(
-          'labelLarge',
-          style: Theme.of(context).textTheme.labelLarge,
+        _TextShow(
+          name: 'labelLarge',
+          style: theme.textTheme.labelLarge,
         ),
-        Text(
-          'labelMedium',
-          style: Theme.of(context).textTheme.labelMedium,
+        _TextShow(
+          name: 'labelMedium',
+          style: theme.textTheme.labelMedium,
         ),
-        Text(
-          'labelSmall',
-          style: Theme.of(context).textTheme.labelSmall,
+        _TextShow(
+          name: 'labelSmall',
+          style: theme.textTheme.labelSmall,
         ),
       ],
+    );
+  }
+}
+
+class _TextShow extends StatelessWidget {
+  const _TextShow({
+    required this.name,
+    required this.style,
+  });
+
+  final String name;
+  final TextStyle? style;
+
+  @override
+  Widget build(BuildContext context) {
+    final showStyle = TextStyle(
+      fontSize: 9,
+      fontWeight: FontWeight.normal,
+      color: style?.color,
+    );
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 1),
+              child: Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: [
+                  Text(
+                    'color: ${style?.color.toString().replaceAll('Color(0x', '#').replaceAll(')', '') ?? ''}',
+                    style: showStyle,
+                  ),
+                  Text(
+                    style?.fontWeight.toString() ?? '',
+                    style: showStyle,
+                  ),
+                  Text(
+                    'size: ${style?.fontSize.toString() ?? ''} ',
+                    style: showStyle,
+                  ),
+                ],
+              ),
+            ),
+            Text(
+              name,
+              style: style,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
