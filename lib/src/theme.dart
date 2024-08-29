@@ -54,6 +54,7 @@ ThemeData _phoenixTheme({
       Size(buttonHeight ?? _kButtonHeight, buttonHeight ?? _kButtonHeight);
 
   return ThemeData(
+    iconTheme: isMobile ? null : const IconThemeData(size: 22),
     colorScheme: colorScheme,
     scaffoldBackgroundColor: colorScheme.surface,
     splashFactory: NoSplash.splashFactory,
