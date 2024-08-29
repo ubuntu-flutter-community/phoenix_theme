@@ -12,7 +12,9 @@ const _lightBase = Colors.white;
 final _darkBase = Colors.black.scale(lightness: 0.09);
 final _darkMenuBase = Colors.black.scale(lightness: 0.07);
 const _kContainerRadius = 10.0;
-final _kButtonHeight = isDesktop ? 42.0 : 48.0;
+const kDesktopButtonHeight = 42.0;
+const kMobileButtonHeight = 48.0;
+final _kButtonHeight = isDesktop ? kDesktopButtonHeight : kMobileButtonHeight;
 final _kButtonRadius = _kButtonHeight / 2;
 const _kMenuRadius = 8.0;
 const _kInputDecorationRadius = 6.0;
@@ -48,7 +50,8 @@ ThemeData _phoenixTheme({
     borderRadius: BorderRadius.circular(buttonRadius ?? _kButtonRadius),
   );
 
-  final buttonSize = Size(1, buttonHeight ?? _kButtonHeight);
+  final buttonSize =
+      Size(buttonHeight ?? _kButtonHeight, buttonHeight ?? _kButtonHeight);
 
   return ThemeData(
     colorScheme: colorScheme,
@@ -85,6 +88,10 @@ ThemeData _phoenixTheme({
     textButtonTheme: _textButtonThemeData(
       colorScheme: colorScheme,
       buttonShape: buttonShape,
+      buttonSize: buttonSize,
+    ),
+    iconButtonTheme: _iconButtonTheme(
+      colorScheme: colorScheme,
       buttonSize: buttonSize,
     ),
     navigationRailTheme: _naviRailTheme(colorScheme),
@@ -420,6 +427,32 @@ TextButtonThemeData _textButtonThemeData({
     style: TextButton.styleFrom(
       shape: buttonShape,
       minimumSize: buttonSize,
+    ),
+  );
+}
+
+IconButtonThemeData _iconButtonTheme({
+  required ColorScheme colorScheme,
+  required Size buttonSize,
+}) {
+  return IconButtonThemeData(
+    style: IconButton.styleFrom(
+      minimumSize: buttonSize,
+      padding: buttonSize.height < kMobileButtonHeight ? EdgeInsets.zero : null,
+      visualDensity: buttonSize.height < kMobileButtonHeight
+          ? VisualDensity.compact
+          : null,
+    ).copyWith(
+      iconColor: WidgetStateProperty.resolveWith(
+        (s) => s.contains(WidgetState.disabled)
+            ? colorScheme.onSurface.withOpacity(0.7)
+            : colorScheme.onSurface,
+      ),
+      backgroundColor: WidgetStateProperty.resolveWith(
+        (s) => s.contains(WidgetState.selected)
+            ? colorScheme.onSurface.withOpacity(0.1)
+            : Colors.transparent,
+      ),
     ),
   );
 }
