@@ -18,6 +18,9 @@ final _kButtonHeight = isDesktop ? kDesktopButtonHeight : kMobileButtonHeight;
 final _kButtonRadius = _kButtonHeight / 2;
 const _kMenuRadius = 8.0;
 const _kInputDecorationRadius = 6.0;
+const _kDesktopIconSize = 20.0;
+const _kMobileIconSize = 24.0;
+final _iconSize = isMobile ? _kMobileIconSize : _kDesktopIconSize;
 
 ThemePair phoenixTheme({
   required Color color,
@@ -54,12 +57,10 @@ ThemeData _phoenixTheme({
       Size(buttonHeight ?? _kButtonHeight, buttonHeight ?? _kButtonHeight);
 
   return ThemeData(
-    iconTheme: isMobile
-        ? null
-        : IconThemeData(
-            size: 20,
-            color: colorScheme.onSurface,
-          ),
+    iconTheme: IconThemeData(
+      size: _iconSize,
+      color: colorScheme.onSurface,
+    ),
     colorScheme: colorScheme,
     scaffoldBackgroundColor: colorScheme.surface,
     splashFactory: NoSplash.splashFactory,
@@ -449,6 +450,7 @@ IconButtonThemeData _iconButtonTheme({
           ? VisualDensity.compact
           : null,
     ).copyWith(
+      iconSize: WidgetStatePropertyAll(_iconSize),
       iconColor: WidgetStateProperty.resolveWith(
         (s) => s.contains(WidgetState.disabled)
             ? colorScheme.onSurface.withOpacity(0.7)
