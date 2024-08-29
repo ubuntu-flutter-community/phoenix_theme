@@ -6,21 +6,24 @@ import 'package:flutter/material.dart';
 import 'color_x.dart';
 import 'theme_data_x.dart';
 
+bool get _isMobile =>
+    !kIsWeb && (Platform.isAndroid || Platform.isIOS || Platform.isFuchsia);
+
 typedef ThemePair = ({ThemeData lightTheme, ThemeData darkTheme});
 
 const _lightBase = Colors.white;
 final _darkBase = Colors.black.scale(lightness: 0.09);
 final _darkMenuBase = Colors.black.scale(lightness: 0.07);
 const _kContainerRadius = 10.0;
-const kDesktopButtonHeight = 42.0;
-const kMobileButtonHeight = 48.0;
-final _kButtonHeight = isDesktop ? kDesktopButtonHeight : kMobileButtonHeight;
+const _kDesktopButtonHeight = 42.0;
+const _kMobileButtonHeight = 48.0;
+final _kButtonHeight = _isMobile ? _kMobileButtonHeight : _kDesktopButtonHeight;
 final _kButtonRadius = _kButtonHeight / 2;
 const _kMenuRadius = 8.0;
 const _kInputDecorationRadius = 6.0;
 const _kDesktopIconSize = 20.0;
 const _kMobileIconSize = 24.0;
-final _iconSize = isMobile ? _kMobileIconSize : _kDesktopIconSize;
+final _iconSize = _isMobile ? _kMobileIconSize : _kDesktopIconSize;
 
 ThemePair phoenixTheme({
   required Color color,
@@ -246,7 +249,7 @@ SliderThemeData _sliderTheme(ColorScheme colorScheme) {
 
 InputDecorationTheme _inputDecorationTheme(ColorScheme colorScheme) {
   return InputDecorationTheme(
-    isDense: isDesktop ? true : false,
+    isDense: _isMobile ? false : true,
     filled: true,
     fillColor: colorScheme.surface
         .scale(lightness: colorScheme.isLight ? -0.07 : 0.03),
@@ -445,8 +448,9 @@ IconButtonThemeData _iconButtonTheme({
   return IconButtonThemeData(
     style: IconButton.styleFrom(
       minimumSize: buttonSize,
-      padding: buttonSize.height < kMobileButtonHeight ? EdgeInsets.zero : null,
-      visualDensity: buttonSize.height < kMobileButtonHeight
+      padding:
+          buttonSize.height < _kMobileButtonHeight ? EdgeInsets.zero : null,
+      visualDensity: buttonSize.height < _kMobileButtonHeight
           ? VisualDensity.compact
           : null,
     ).copyWith(
@@ -514,9 +518,3 @@ SnackBarThemeData _snackBarThemeData(ColorScheme colorScheme) {
     ),
   );
 }
-
-bool get isMobile =>
-    !kIsWeb && (Platform.isAndroid || Platform.isIOS || Platform.isFuchsia);
-
-bool get isDesktop =>
-    !kIsWeb && (Platform.isLinux || Platform.isMacOS || Platform.isWindows);
