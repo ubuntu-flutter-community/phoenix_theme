@@ -12,8 +12,8 @@ bool get _isMobile =>
 typedef ThemePair = ({ThemeData lightTheme, ThemeData darkTheme});
 
 const _lightBase = Colors.white;
-final _darkBase = Colors.black.scale(lightness: 0.09);
-final _darkMenuBase = Colors.black.scale(lightness: 0.07);
+final _darkBase = Colors.black.scale(lightness: 0.04);
+final _darkMenuBase = Colors.black.scale(lightness: 0.08);
 const _kContainerRadius = 10.0;
 const _kDesktopButtonHeight = 42.0;
 const _kMobileButtonHeight = 48.0;
@@ -186,7 +186,7 @@ CardTheme _cardTheme(ColorScheme colorScheme) {
 
 Color _cardColor(ColorScheme colorScheme) {
   return colorScheme.surface.scale(
-    lightness: colorScheme.isLight ? -0.06 : 0.05,
+    lightness: colorScheme.isLight ? -0.06 : 0.08,
   );
 }
 
