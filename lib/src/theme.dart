@@ -186,7 +186,7 @@ CardTheme _cardTheme(ColorScheme colorScheme) {
 
 Color _cardColor(ColorScheme colorScheme) {
   return colorScheme.surface.scale(
-    lightness: colorScheme.isLight ? -0.06 : 0.05,
+    lightness: colorScheme.isLight ? -0.06 : 0.08,
   );
 }
 
