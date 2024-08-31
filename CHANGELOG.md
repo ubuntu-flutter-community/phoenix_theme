@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.0.1](https://github.com/ubuntu-flutter-community/phoenix_theme/compare/v1.0.0...v1.0.1) (2024-08-31)
+
+
+### Bug Fixes
+
+* even smaller desktop icon size, improve fonts view ([2f9cf4d](https://github.com/ubuntu-flutter-community/phoenix_theme/commit/2f9cf4ddb0c09c6d944e66210becf8465bbe1353))
+* **example:** isMobile getter ([6000189](https://github.com/ubuntu-flutter-community/phoenix_theme/commit/60001898750996e800334e0a18d1232e3edbb1a6))
+* export less ([acf9bf1](https://github.com/ubuntu-flutter-community/phoenix_theme/commit/acf9bf1e05a110d890e83ae333f6822299fbbb5e))
+* IconButtonTheme iconSize ([196aecf](https://github.com/ubuntu-flutter-community/phoenix_theme/commit/196aecfc844987a88c91ce2d1c8e20ebeab118d4))
+* IconTheme color ([4e6aebc](https://github.com/ubuntu-flutter-community/phoenix_theme/commit/4e6aebca68e94274db152967eb1e491ef96bd181))
+* remove text theme tints ([#3](https://github.com/ubuntu-flutter-community/phoenix_theme/issues/3)) ([1f684a3](https://github.com/ubuntu-flutter-community/phoenix_theme/commit/1f684a311e57430b51f5a6390bab6fb01141d094))
+* smaller icons for desktop ([49235be](https://github.com/ubuntu-flutter-community/phoenix_theme/commit/49235be0be4e8f9a85d6e2fa65f87cdd4369cd58))
+
 ## 1.0.0 (2024-08-29)
 
 
