@@ -115,7 +115,7 @@ ThemeData _phoenixTheme({
 }
 
 ColorScheme _darkScheme(Color color) {
-  return ColorScheme.fromSeed(
+  final colorScheme = ColorScheme.fromSeed(
     seedColor: color,
     brightness: Brightness.dark,
     surfaceTint: _darkBase,
@@ -124,15 +124,31 @@ ColorScheme _darkScheme(Color color) {
     background: _darkBase,
     outline: _darkBase.scale(lightness: 0.28),
   );
+  return colorScheme.copyWith(
+    onSurface: colorScheme.onSurface.scale(
+      saturation: -1,
+    ),
+    onSurfaceVariant: colorScheme.onSurfaceVariant.scale(
+      saturation: -1,
+    ),
+  );
 }
 
 ColorScheme _lightScheme(Color color) {
-  return ColorScheme.fromSeed(
+  final colorScheme = ColorScheme.fromSeed(
     seedColor: color,
     brightness: Brightness.light,
     surface: _lightBase,
     surfaceTint: _lightBase,
     outline: Colors.white.scale(lightness: -0.3),
+  );
+  return colorScheme.copyWith(
+    onSurface: colorScheme.onSurface.scale(
+      saturation: -1,
+    ),
+    onSurfaceVariant: colorScheme.onSurfaceVariant.scale(
+      saturation: -1,
+    ),
   );
 }
 
