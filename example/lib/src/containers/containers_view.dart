@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../build_context_x.dart';
 import '../constants.dart';
 
 class ContainersView extends StatefulWidget {
@@ -23,11 +24,22 @@ class _ContainersViewState extends State<ContainersView> {
   Widget build(BuildContext context) {
     final card = Card(
       elevation: _elevation,
-      child: const SizedBox(
+      child: SizedBox(
         height: 150,
         width: 200,
         child: Center(
-          child: Text('Card'),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircleAvatar(
+                child: Icon(Icons.play_arrow),
+              ),
+              Text(
+                'CircleAvatar',
+                style: context.theme.textTheme.labelSmall,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -63,7 +75,16 @@ class _ContainersViewState extends State<ContainersView> {
     );
 
     final children = [
-      card,
+      Stack(
+        fit: StackFit.passthrough,
+        children: [
+          card,
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text('Card'),
+          ),
+        ],
+      ),
       slider,
       containerWithBorder,
       for (var i = 0; i < _icons.length; i++)
