@@ -126,6 +126,8 @@ ColorScheme _darkScheme(Color color) {
     seedColor: color,
     brightness: Brightness.dark,
     surfaceTint: _darkBase,
+    inverseSurface: _lightBase,
+    onInverseSurface: _darkBase,
     surface: _darkBase,
     // ignore: deprecated_member_use
     background: _darkBase,
@@ -147,6 +149,8 @@ ColorScheme _lightScheme(Color color) {
     brightness: Brightness.light,
     surface: _lightBase,
     surfaceTint: _lightBase,
+    inverseSurface: _darkBase,
+    onInverseSurface: _lightBase,
     outline: Colors.white.scale(lightness: -0.3),
   );
   return colorScheme.copyWith(
@@ -536,6 +540,7 @@ DrawerThemeData _drawerTheme(ColorScheme colorScheme) {
 
 SnackBarThemeData _snackBarThemeData(ColorScheme colorScheme) {
   return SnackBarThemeData(
+    backgroundColor: colorScheme.inverseSurface,
     behavior: SnackBarBehavior.floating,
     actionTextColor: colorScheme.primary.scale(
       saturation: 0.5,
