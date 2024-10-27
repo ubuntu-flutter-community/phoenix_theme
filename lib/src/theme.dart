@@ -118,6 +118,7 @@ ThemeData _phoenixTheme({
     cardTheme: _cardTheme(colorScheme),
     drawerTheme: _drawerTheme(colorScheme),
     inputDecorationTheme: _inputDecorationTheme(colorScheme),
+    listTileTheme: _createListTileTheme(colorScheme),
   );
 }
 
@@ -545,6 +546,28 @@ SnackBarThemeData _snackBarThemeData(ColorScheme colorScheme) {
     actionTextColor: colorScheme.primary.scale(
       saturation: 0.5,
       lightness: (colorScheme.isLight ? 0.2 : -0.5),
+    ),
+  );
+}
+
+ListTileThemeData _createListTileTheme(ColorScheme colorScheme) {
+  final isHighContrast =
+      [Colors.black, Colors.white].contains(colorScheme.primary);
+
+  return ListTileThemeData(
+    selectedColor:
+        isHighContrast ? colorScheme.onInverseSurface : colorScheme.onSurface,
+    iconColor: colorScheme.onSurface.withOpacity(0.8),
+    selectedTileColor: isHighContrast
+        ? colorScheme.inverseSurface
+        : colorScheme.onSurface.withOpacity(
+            colorScheme.brightness == Brightness.dark ? 0.035 : 0.04,
+          ),
+    minVerticalPadding: 6,
+    visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(6)),
+      side: BorderSide.none,
     ),
   );
 }
