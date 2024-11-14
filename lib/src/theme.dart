@@ -122,6 +122,7 @@ ThemeData _phoenixTheme({
     chipTheme: _createChipTheme(
       selectedColor: colorScheme.primary,
       colorScheme: colorScheme,
+      textStyle: const TextStyle(fontSize: 14, height: 1.08),
     ),
   );
 }
@@ -579,6 +580,7 @@ ListTileThemeData _createListTileTheme(ColorScheme colorScheme) {
 ChipThemeData _createChipTheme({
   required Color selectedColor,
   required ColorScheme colorScheme,
+  required TextStyle? textStyle,
 }) {
   final isHC = colorScheme.primary == Colors.black ||
       colorScheme.primary == Colors.white;
@@ -589,11 +591,9 @@ ChipThemeData _createChipTheme({
 
   return ChipThemeData(
     selectedColor: selectedBackgroundColor.withOpacity(isHC ? 1 : 0.4),
-    labelStyle: TextStyle(
-      color: colorScheme.onSurface,
-    ),
+    labelStyle: textStyle?.copyWith(color: colorScheme.onSurface),
     checkmarkColor: selectedForeGroundColor,
-    secondaryLabelStyle: TextStyle(
+    secondaryLabelStyle: textStyle?.copyWith(
       color: selectedForeGroundColor,
       fontWeight: isHC ? FontWeight.bold : FontWeight.normal,
     ),
