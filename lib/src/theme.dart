@@ -124,8 +124,27 @@ ThemeData _phoenixTheme({
       colorScheme: colorScheme,
       textStyle: const TextStyle(fontSize: 14, height: 1.08),
     ),
+    bottomSheetTheme: _createBottomSheetTheme(colorScheme),
   );
 }
+
+BottomSheetThemeData _createBottomSheetTheme(ColorScheme colorScheme) =>
+    BottomSheetThemeData(
+      elevation: 3,
+      modalBackgroundColor: _menuBg(colorScheme),
+      backgroundColor: _menuBg(colorScheme),
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(_kContainerRadius),
+          topLeft: Radius.circular(_kContainerRadius),
+        ),
+        side: colorScheme.isLight
+            ? BorderSide.none
+            : BorderSide(
+                color: Colors.white.withOpacity(0.05),
+              ),
+      ),
+    );
 
 ColorScheme _darkScheme(Color color) {
   final colorScheme = ColorScheme.fromSeed(

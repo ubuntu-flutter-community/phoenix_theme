@@ -161,6 +161,30 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                 onPressed: () => showSnack(context),
                 icon: const Icon(Icons.add),
               ),
+              IconButton(
+                onPressed: () => showBottomSheet(
+                  context: context,
+                  builder: (context) => BottomSheet(
+                    enableDrag: false,
+                    onClosing: () {},
+                    builder: (context) => ListView(
+                      padding: const EdgeInsets.all(18.0),
+                      shrinkWrap: true,
+                      children: [
+                        ListTile(
+                          title: const Text('hello'),
+                          onTap: Navigator.of(context).pop,
+                        ),
+                        ListTile(
+                          title: const Text('hello'),
+                          onTap: Navigator.of(context).pop,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                icon: const Icon(Icons.vertical_align_top),
+              ),
               ValueListenableBuilder(
                 valueListenable: themeModeNotifier,
                 builder: (context, themeMode, widget) {
