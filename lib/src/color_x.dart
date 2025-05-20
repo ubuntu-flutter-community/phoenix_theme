@@ -29,7 +29,7 @@ extension ColorX on Color {
     }
 
     return hslColor
-        .withAlpha(scale(opacity, alpha))
+        .withAlpha(scale(a, alpha))
         .withHue(scale(hslColor.hue, hue, 360.0))
         .withSaturation(scale(hslColor.saturation, saturation))
         .withLightness(scale(hslColor.lightness, lightness))
@@ -143,7 +143,7 @@ extension ColorX on Color {
 
   /// Returns a hex representation (`#AARRGGBB`) of the color.
   String toHex() {
-    return '#${alpha.toHex()}${red.toHex()}${green.toHex()}${blue.toHex()}';
+    return '#${a.toInt().toHex()}${r.toInt().toHex()}${g.toInt().toHex()}${b.toInt().toHex()}';
   }
 
   Color get contrastColor =>

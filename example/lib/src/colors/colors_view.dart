@@ -89,7 +89,7 @@ class ColorsView extends StatelessWidget {
         borderRadius: BorderRadius.circular(6),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             offset: const Offset(0, 1),
             spreadRadius: 1,
             blurRadius: 2,
@@ -192,7 +192,7 @@ Map<String, (Color, Color?)> getPrimaryColors(ThemeData theme) {
   return Map.fromEntries(
     Colors.accents.map(
       (e) => MapEntry(
-        '#${e.value.toHex().toString()}',
+        '#${e.toARGB32().toHex().toString()}',
         (e, theme.colorScheme.onPrimary),
       ),
     ),

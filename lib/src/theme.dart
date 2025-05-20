@@ -79,7 +79,6 @@ ThemeData _phoenixTheme({
     menuTheme: _menuTheme(colorScheme),
     popupMenuTheme: _popupMenuTheme(colorScheme),
     dialogTheme: _dialogTheme(colorScheme),
-    dialogBackgroundColor: _menuBg(colorScheme),
     dropdownMenuTheme: _dropdownMenuTheme(colorScheme),
     sliderTheme: _sliderTheme(colorScheme),
     dividerTheme: _dividerTheme(colorScheme),
@@ -141,7 +140,7 @@ BottomSheetThemeData _createBottomSheetTheme(ColorScheme colorScheme) =>
         side: colorScheme.isLight
             ? BorderSide.none
             : BorderSide(
-                color: Colors.white.withOpacity(0.05),
+                color: Colors.white.withValues(alpha: 0.05),
               ),
       ),
     );
@@ -198,9 +197,9 @@ Color _dividerColor(ColorScheme colorScheme) {
   return colorScheme.outline.scale(lightness: colorScheme.isLight ? 0.3 : -0.4);
 }
 
-DialogTheme _dialogTheme(ColorScheme colorScheme) {
+DialogThemeData _dialogTheme(ColorScheme colorScheme) {
   final bgColor = _menuBg(colorScheme);
-  return DialogTheme(
+  return DialogThemeData(
     backgroundColor: bgColor,
     surfaceTintColor: bgColor,
     shape: RoundedRectangleBorder(
@@ -208,14 +207,14 @@ DialogTheme _dialogTheme(ColorScheme colorScheme) {
       side: colorScheme.isLight
           ? BorderSide.none
           : BorderSide(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
             ),
     ),
   );
 }
 
-CardTheme _cardTheme(ColorScheme colorScheme) {
-  return CardTheme(
+CardThemeData _cardTheme(ColorScheme colorScheme) {
+  return CardThemeData(
     color: _cardColor(colorScheme),
   );
 }
@@ -236,8 +235,8 @@ PopupMenuThemeData _popupMenuTheme(ColorScheme colorScheme) {
     shape: OutlineInputBorder(
       borderRadius: BorderRadius.circular(_kContainerRadius),
       borderSide: BorderSide(
-        color: colorScheme.onSurface.withOpacity(
-          colorScheme.isLight ? 0.3 : 0.2,
+        color: colorScheme.onSurface.withValues(
+          alpha: colorScheme.isLight ? 0.3 : 0.2,
         ),
         width: 1,
       ),
@@ -253,8 +252,8 @@ MenuStyle _menuStyle(ColorScheme colorScheme) {
     shape: WidgetStateProperty.resolveWith(
       (states) => RoundedRectangleBorder(
         side: BorderSide(
-          color: colorScheme.onSurface.withOpacity(
-            colorScheme.isLight ? 0.3 : 0.2,
+          color: colorScheme.onSurface.withValues(
+            alpha: colorScheme.isLight ? 0.3 : 0.2,
           ),
           width: 1,
         ),
@@ -263,8 +262,8 @@ MenuStyle _menuStyle(ColorScheme colorScheme) {
     ),
     side: WidgetStateBorderSide.resolveWith(
       (states) => BorderSide(
-        color: colorScheme.onSurface.withOpacity(
-          colorScheme.isLight ? 0.3 : 0.2,
+        color: colorScheme.onSurface.withValues(
+          alpha: colorScheme.isLight ? 0.3 : 0.2,
         ),
         width: 1,
       ),
@@ -295,8 +294,8 @@ SliderThemeData _sliderTheme(ColorScheme colorScheme) {
       overlayRadius: 13,
     ),
     overlayColor:
-        colorScheme.primary.withOpacity(colorScheme.isLight ? 0.4 : 0.7),
-    inactiveTrackColor: colorScheme.primary.withOpacity(0.5),
+        colorScheme.primary.withValues(alpha: colorScheme.isLight ? 0.4 : 0.7),
+    inactiveTrackColor: colorScheme.primary.withValues(alpha: 0.5),
     trackShape: CustomTrackShape(),
   );
 }
@@ -373,7 +372,7 @@ SwitchThemeData _switchTheme(ColorScheme colorScheme) {
       (states) => switch (states.toList()) {
         [WidgetState.disabled] ||
         [WidgetState.disabled, WidgetState.selected] =>
-          colorScheme.onSurface.withOpacity(0.3),
+          colorScheme.onSurface.withValues(alpha: 0.3),
         _ => colorScheme.primary,
       },
     ),
@@ -389,9 +388,9 @@ SwitchThemeData _switchTheme(ColorScheme colorScheme) {
 Color _getSwitchThumbColor(Set<WidgetState> states, ColorScheme colorScheme) {
   if (states.contains(WidgetState.disabled)) {
     if (states.contains(WidgetState.selected)) {
-      return colorScheme.onSurface.withOpacity(0.5);
+      return colorScheme.onSurface.withValues(alpha: 0.5);
     }
-    return colorScheme.onSurface.withOpacity(0.5);
+    return colorScheme.onSurface.withValues(alpha: 0.5);
   } else {
     return colorScheme.isLight ? colorScheme.primary : colorScheme.primaryFixed;
   }
@@ -401,7 +400,7 @@ Color _getSwitchTrackColor(Set<WidgetState> states, ColorScheme colorScheme) {
   return switch (states.toList()) {
     [WidgetState.disabled] ||
     [WidgetState.disabled, WidgetState.selected] =>
-      colorScheme.onSurface.withOpacity(0.3),
+      colorScheme.onSurface.withValues(alpha: 0.3),
     [WidgetState.hovered] => Colors.transparent,
     [] => colorScheme.surface,
     _ => colorScheme.primaryContainer,
@@ -416,8 +415,8 @@ CheckboxThemeData _checkBoxTheme(ColorScheme colorScheme) {
 
 ProgressIndicatorThemeData _progressIndicatorTheme(ColorScheme colorScheme) {
   return ProgressIndicatorThemeData(
-    circularTrackColor: colorScheme.primary.withOpacity(0.4),
-    linearTrackColor: colorScheme.primary.withOpacity(0.4),
+    circularTrackColor: colorScheme.primary.withValues(alpha: 0.4),
+    linearTrackColor: colorScheme.primary.withValues(alpha: 0.4),
   );
 }
 
@@ -461,9 +460,9 @@ OutlinedButtonThemeData _outlinedButtonTheme({
     style: OutlinedButton.styleFrom(
       shape: buttonShape,
       minimumSize: buttonSize,
-      backgroundColor: colorScheme.primary.withOpacity(0.03),
+      backgroundColor: colorScheme.primary.withValues(alpha: 0.03),
       side: BorderSide(
-        color: colorScheme.primary.withOpacity(0.4),
+        color: colorScheme.primary.withValues(alpha: 0.4),
       ),
     ),
   );
@@ -511,12 +510,12 @@ IconButtonThemeData _iconButtonTheme({
       iconSize: WidgetStatePropertyAll(_iconSize),
       iconColor: WidgetStateProperty.resolveWith(
         (s) => s.contains(WidgetState.disabled)
-            ? colorScheme.onSurface.withOpacity(0.7)
+            ? colorScheme.onSurface.withValues(alpha: 0.7)
             : colorScheme.onSurface,
       ),
       backgroundColor: WidgetStateProperty.resolveWith(
         (s) => s.contains(WidgetState.selected)
-            ? colorScheme.onSurface.withOpacity(0.1)
+            ? colorScheme.onSurface.withValues(alpha: 0.1)
             : Colors.transparent,
       ),
     ),
@@ -537,7 +536,7 @@ NavigationBarThemeData _naviBarTheme(ColorScheme colorScheme) {
 }
 
 Color _indicatorColor(ColorScheme colorScheme) =>
-    _dividerColor(colorScheme).withOpacity(0.8);
+    _dividerColor(colorScheme).withValues(alpha: 0.8);
 
 AppBarTheme _appBarTheme(ColorScheme colorScheme) {
   return AppBarTheme(
@@ -581,11 +580,11 @@ ListTileThemeData _createListTileTheme(ColorScheme colorScheme) {
   return ListTileThemeData(
     selectedColor:
         isHighContrast ? colorScheme.onInverseSurface : colorScheme.onSurface,
-    iconColor: colorScheme.onSurface.withOpacity(0.8),
+    iconColor: colorScheme.onSurface.withValues(alpha: 0.8),
     selectedTileColor: isHighContrast
         ? colorScheme.inverseSurface
-        : colorScheme.onSurface.withOpacity(
-            colorScheme.brightness == Brightness.dark ? 0.035 : 0.04,
+        : colorScheme.onSurface.withValues(
+            alpha: colorScheme.brightness == Brightness.dark ? 0.035 : 0.04,
           ),
     minVerticalPadding: 6,
     visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
@@ -609,7 +608,7 @@ ChipThemeData _createChipTheme({
       isHC ? colorScheme.onInverseSurface : colorScheme.onSurface;
 
   return ChipThemeData(
-    selectedColor: selectedBackgroundColor.withOpacity(isHC ? 1 : 0.4),
+    selectedColor: selectedBackgroundColor.withValues(alpha: isHC ? 1 : 0.4),
     labelStyle: textStyle?.copyWith(color: colorScheme.onSurface),
     checkmarkColor: selectedForeGroundColor,
     secondaryLabelStyle: textStyle?.copyWith(
@@ -619,10 +618,11 @@ ChipThemeData _createChipTheme({
     side: WidgetStateBorderSide.resolveWith(
       (s) => BorderSide(
         color: s.contains(WidgetState.selected)
-            ? selectedBackgroundColor.withOpacity(isHC ? 1 : 0.1)
+            ? selectedBackgroundColor.withValues(alpha: isHC ? 1 : 0.1)
             : (isHC ? colorScheme.outlineVariant : colorScheme.outline)
-                .withOpacity(
-                s.contains(WidgetState.disabled) ? (isHC ? 0.3 : 0.7) : 1,
+                .withValues(
+                alpha:
+                    s.contains(WidgetState.disabled) ? (isHC ? 0.3 : 0.7) : 1,
               ),
       ),
     ),
