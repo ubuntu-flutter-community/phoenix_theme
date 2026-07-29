@@ -323,7 +323,10 @@ OutlineInputBorder _inputBorder({
 }) {
   return OutlineInputBorder(
     borderSide: BorderSide(
-      width: 1,
+      width: switch (state) {
+        WidgetState.focused => 2,
+        _ => 1.0,
+      },
       color: switch (state) {
         WidgetState.focused => colorScheme.primary,
         WidgetState.hovered => colorScheme.primary,
