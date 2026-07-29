@@ -50,7 +50,7 @@ ThemePair phoenixTheme({
       colorScheme: darkScheme,
       buttonHeight: buttonHeight,
       buttonRadius: buttonRadius,
-    )
+    ),
   );
 }
 
@@ -63,14 +63,13 @@ ThemeData _phoenixTheme({
     borderRadius: BorderRadius.circular(buttonRadius ?? _kButtonRadius),
   );
 
-  final buttonSize =
-      Size(buttonHeight ?? _kButtonHeight, buttonHeight ?? _kButtonHeight);
+  final buttonSize = Size(
+    buttonHeight ?? _kButtonHeight,
+    buttonHeight ?? _kButtonHeight,
+  );
 
   return ThemeData(
-    iconTheme: IconThemeData(
-      size: _iconSize,
-      color: colorScheme.onSurface,
-    ),
+    iconTheme: IconThemeData(size: _iconSize, color: colorScheme.onSurface),
     colorScheme: colorScheme,
     scaffoldBackgroundColor: colorScheme.surface,
     splashFactory: NoSplash.splashFactory,
@@ -139,9 +138,7 @@ BottomSheetThemeData _createBottomSheetTheme(ColorScheme colorScheme) =>
         ),
         side: colorScheme.isLight
             ? BorderSide.none
-            : BorderSide(
-                color: Colors.white.withValues(alpha: 0.05),
-              ),
+            : BorderSide(color: Colors.white.withValues(alpha: 0.05)),
       ),
     );
 
@@ -158,12 +155,8 @@ ColorScheme _darkScheme(Color color) {
     outline: _darkBase.scale(lightness: 0.28),
   );
   return colorScheme.copyWith(
-    onSurface: colorScheme.onSurface.scale(
-      saturation: -1,
-    ),
-    onSurfaceVariant: colorScheme.onSurfaceVariant.scale(
-      saturation: -1,
-    ),
+    onSurface: colorScheme.onSurface.scale(saturation: -1),
+    onSurfaceVariant: colorScheme.onSurfaceVariant.scale(saturation: -1),
   );
 }
 
@@ -178,20 +171,16 @@ ColorScheme _lightScheme(Color color) {
     outline: Colors.white.scale(lightness: -0.3),
   );
   return colorScheme.copyWith(
-    onSurface: colorScheme.onSurface.scale(
-      saturation: -1,
-    ),
-    onSurfaceVariant: colorScheme.onSurfaceVariant.scale(
-      saturation: -1,
-    ),
+    onSurface: colorScheme.onSurface.scale(saturation: -1),
+    onSurfaceVariant: colorScheme.onSurfaceVariant.scale(saturation: -1),
   );
 }
 
 DividerThemeData _dividerTheme(ColorScheme colorScheme) => DividerThemeData(
-      color: _dividerColor(colorScheme),
-      space: 1.0,
-      thickness: 1.0,
-    );
+  color: _dividerColor(colorScheme),
+  space: 1.0,
+  thickness: 1.0,
+);
 
 Color _dividerColor(ColorScheme colorScheme) {
   return colorScheme.outline.scale(lightness: colorScheme.isLight ? 0.3 : -0.4);
@@ -206,17 +195,13 @@ DialogThemeData _dialogTheme(ColorScheme colorScheme) {
       borderRadius: BorderRadius.circular(_kContainerRadius),
       side: colorScheme.isLight
           ? BorderSide.none
-          : BorderSide(
-              color: Colors.white.withValues(alpha: 0.2),
-            ),
+          : BorderSide(color: Colors.white.withValues(alpha: 0.2)),
     ),
   );
 }
 
 CardThemeData _cardTheme(ColorScheme colorScheme) {
-  return CardThemeData(
-    color: _cardColor(colorScheme),
-  );
+  return CardThemeData(color: _cardColor(colorScheme));
 }
 
 Color _cardColor(ColorScheme colorScheme) {
@@ -277,24 +262,19 @@ Color _menuBg(ColorScheme colorScheme) =>
     colorScheme.isLight ? _lightBase : _darkMenuBase;
 
 MenuThemeData _menuTheme(ColorScheme colorScheme) {
-  return MenuThemeData(
-    style: _menuStyle(colorScheme),
-  );
+  return MenuThemeData(style: _menuStyle(colorScheme));
 }
 
 DropdownMenuThemeData _dropdownMenuTheme(ColorScheme colorScheme) {
-  return DropdownMenuThemeData(
-    menuStyle: _menuStyle(colorScheme),
-  );
+  return DropdownMenuThemeData(menuStyle: _menuStyle(colorScheme));
 }
 
 SliderThemeData _sliderTheme(ColorScheme colorScheme) {
   return SliderThemeData(
-    overlayShape: const RoundSliderOverlayShape(
-      overlayRadius: 13,
+    overlayShape: const RoundSliderOverlayShape(overlayRadius: 13),
+    overlayColor: colorScheme.primary.withValues(
+      alpha: colorScheme.isLight ? 0.4 : 0.7,
     ),
-    overlayColor:
-        colorScheme.primary.withValues(alpha: colorScheme.isLight ? 0.4 : 0.7),
     inactiveTrackColor: colorScheme.primary.withValues(alpha: 0.5),
     trackShape: CustomTrackShape(),
   );
@@ -304,12 +284,11 @@ InputDecorationTheme _inputDecorationTheme(ColorScheme colorScheme) {
   return InputDecorationTheme(
     isDense: _isMobile ? false : true,
     filled: true,
-    fillColor: colorScheme.surface
-        .scale(lightness: colorScheme.isLight ? -0.07 : 0.03),
-    border: _inputBorder(colorScheme: colorScheme),
-    enabledBorder: _inputBorder(
-      colorScheme: colorScheme,
+    fillColor: colorScheme.surface.scale(
+      lightness: colorScheme.isLight ? -0.07 : 0.03,
     ),
+    border: _inputBorder(colorScheme: colorScheme),
+    enabledBorder: _inputBorder(colorScheme: colorScheme),
     focusedBorder: _inputBorder(
       colorScheme: colorScheme,
       state: WidgetState.focused,
@@ -330,12 +309,14 @@ OutlineInputBorder _inputBorder({
       color: switch (state) {
         WidgetState.focused => colorScheme.primary,
         WidgetState.hovered => colorScheme.primary,
-        _ =>
-          colorScheme.outline.scale(lightness: colorScheme.isLight ? 0 : 0.1),
+        _ => colorScheme.outline.scale(
+          lightness: colorScheme.isLight ? 0 : 0.1,
+        ),
       },
     ),
-    borderRadius:
-        const BorderRadius.all(Radius.circular(_kInputDecorationRadius)),
+    borderRadius: const BorderRadius.all(
+      Radius.circular(_kInputDecorationRadius),
+    ),
   );
 }
 
@@ -374,8 +355,10 @@ SwitchThemeData _switchTheme(ColorScheme colorScheme) {
     trackOutlineColor: WidgetStateColor.resolveWith(
       (states) => switch (states.toList()) {
         [WidgetState.disabled] ||
-        [WidgetState.disabled, WidgetState.selected] =>
-          colorScheme.onSurface.withValues(alpha: 0.3),
+        [
+          WidgetState.disabled,
+          WidgetState.selected,
+        ] => colorScheme.onSurface.withValues(alpha: 0.3),
         _ => colorScheme.primary,
       },
     ),
@@ -401,8 +384,7 @@ Color _getSwitchThumbColor(Set<WidgetState> states, ColorScheme colorScheme) {
 
 Color _getSwitchTrackColor(Set<WidgetState> states, ColorScheme colorScheme) {
   return switch (states.toList()) {
-    [WidgetState.disabled] ||
-    [WidgetState.disabled, WidgetState.selected] =>
+    [WidgetState.disabled] || [WidgetState.disabled, WidgetState.selected] =>
       colorScheme.onSurface.withValues(alpha: 0.3),
     [WidgetState.hovered] => Colors.transparent,
     [] => colorScheme.surface,
@@ -433,9 +415,7 @@ FloatingActionButtonThemeData _floatingActionButtonTheme(
     hoverElevation: elevation,
     disabledElevation: elevation,
     highlightElevation: elevation,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(30),
-    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
   );
 }
 
@@ -464,9 +444,7 @@ OutlinedButtonThemeData _outlinedButtonTheme({
       shape: buttonShape,
       minimumSize: buttonSize,
       backgroundColor: colorScheme.primary.withValues(alpha: 0.03),
-      side: BorderSide(
-        color: colorScheme.primary.withValues(alpha: 0.4),
-      ),
+      side: BorderSide(color: colorScheme.primary.withValues(alpha: 0.4)),
     ),
   );
 }
@@ -477,10 +455,7 @@ FilledButtonThemeData _filledButtonTheme({
   required RoundedRectangleBorder buttonShape,
 }) {
   return FilledButtonThemeData(
-    style: FilledButton.styleFrom(
-      shape: buttonShape,
-      minimumSize: buttonSize,
-    ),
+    style: FilledButton.styleFrom(shape: buttonShape, minimumSize: buttonSize),
   );
 }
 
@@ -490,10 +465,7 @@ TextButtonThemeData _textButtonThemeData({
   required RoundedRectangleBorder buttonShape,
 }) {
   return TextButtonThemeData(
-    style: TextButton.styleFrom(
-      shape: buttonShape,
-      minimumSize: buttonSize,
-    ),
+    style: TextButton.styleFrom(shape: buttonShape, minimumSize: buttonSize),
   );
 }
 
@@ -502,33 +474,33 @@ IconButtonThemeData _iconButtonTheme({
   required Size buttonSize,
 }) {
   return IconButtonThemeData(
-    style: IconButton.styleFrom(
-      minimumSize: buttonSize,
-      padding:
-          buttonSize.height < _kMobileButtonHeight ? EdgeInsets.zero : null,
-      visualDensity: buttonSize.height < _kMobileButtonHeight
-          ? VisualDensity.compact
-          : null,
-    ).copyWith(
-      iconSize: WidgetStatePropertyAll(_iconSize),
-      iconColor: WidgetStateProperty.resolveWith(
-        (s) => s.contains(WidgetState.disabled)
-            ? colorScheme.onSurface.withValues(alpha: 0.7)
-            : colorScheme.onSurface,
-      ),
-      backgroundColor: WidgetStateProperty.resolveWith(
-        (s) => s.contains(WidgetState.selected)
-            ? colorScheme.onSurface.withValues(alpha: 0.1)
-            : Colors.transparent,
-      ),
-    ),
+    style:
+        IconButton.styleFrom(
+          minimumSize: buttonSize,
+          padding: buttonSize.height < _kMobileButtonHeight
+              ? EdgeInsets.zero
+              : null,
+          visualDensity: buttonSize.height < _kMobileButtonHeight
+              ? VisualDensity.compact
+              : null,
+        ).copyWith(
+          iconSize: WidgetStatePropertyAll(_iconSize),
+          iconColor: WidgetStateProperty.resolveWith(
+            (s) => s.contains(WidgetState.disabled)
+                ? colorScheme.onSurface.withValues(alpha: 0.7)
+                : colorScheme.onSurface,
+          ),
+          backgroundColor: WidgetStateProperty.resolveWith(
+            (s) => s.contains(WidgetState.selected)
+                ? colorScheme.onSurface.withValues(alpha: 0.1)
+                : Colors.transparent,
+          ),
+        ),
   );
 }
 
 NavigationRailThemeData _naviRailTheme(ColorScheme colorScheme) {
-  return NavigationRailThemeData(
-    indicatorColor: _indicatorColor(colorScheme),
-  );
+  return NavigationRailThemeData(indicatorColor: _indicatorColor(colorScheme));
 }
 
 NavigationBarThemeData _naviBarTheme(ColorScheme colorScheme) {
@@ -557,9 +529,7 @@ DrawerThemeData _drawerTheme(ColorScheme colorScheme) {
       ),
       side: colorScheme.isLight
           ? BorderSide.none
-          : BorderSide(
-              color: _dividerColor(colorScheme),
-            ),
+          : BorderSide(color: _dividerColor(colorScheme)),
     ),
     backgroundColor: colorScheme.surface,
   );
@@ -577,12 +547,15 @@ SnackBarThemeData _snackBarThemeData(ColorScheme colorScheme) {
 }
 
 ListTileThemeData _createListTileTheme(ColorScheme colorScheme) {
-  final isHighContrast =
-      [Colors.black, Colors.white].contains(colorScheme.primary);
+  final isHighContrast = [
+    Colors.black,
+    Colors.white,
+  ].contains(colorScheme.primary);
 
   return ListTileThemeData(
-    selectedColor:
-        isHighContrast ? colorScheme.onInverseSurface : colorScheme.onSurface,
+    selectedColor: isHighContrast
+        ? colorScheme.onInverseSurface
+        : colorScheme.onSurface,
     iconColor: colorScheme.onSurface.withValues(alpha: 0.8),
     selectedTileColor: isHighContrast
         ? colorScheme.inverseSurface
@@ -603,12 +576,15 @@ ChipThemeData _createChipTheme({
   required ColorScheme colorScheme,
   required TextStyle? textStyle,
 }) {
-  final isHC = colorScheme.primary == Colors.black ||
+  final isHC =
+      colorScheme.primary == Colors.black ||
       colorScheme.primary == Colors.white;
-  final selectedBackgroundColor =
-      isHC ? colorScheme.inverseSurface : selectedColor;
-  final selectedForeGroundColor =
-      isHC ? colorScheme.onInverseSurface : colorScheme.onSurface;
+  final selectedBackgroundColor = isHC
+      ? colorScheme.inverseSurface
+      : selectedColor;
+  final selectedForeGroundColor = isHC
+      ? colorScheme.onInverseSurface
+      : colorScheme.onSurface;
 
   return ChipThemeData(
     selectedColor: selectedBackgroundColor.withValues(alpha: isHC ? 1 : 0.4),
@@ -623,14 +599,13 @@ ChipThemeData _createChipTheme({
         color: s.contains(WidgetState.selected)
             ? selectedBackgroundColor.withValues(alpha: isHC ? 1 : 0.1)
             : (isHC ? colorScheme.outlineVariant : colorScheme.outline)
-                .withValues(
-                alpha:
-                    s.contains(WidgetState.disabled) ? (isHC ? 0.3 : 0.7) : 1,
-              ),
+                  .withValues(
+                    alpha: s.contains(WidgetState.disabled)
+                        ? (isHC ? 0.3 : 0.7)
+                        : 1,
+                  ),
       ),
     ),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(100),
-    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
   );
 }
